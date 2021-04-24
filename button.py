@@ -110,6 +110,7 @@ class Button:
         elif ds > 0:
             self.scale = min(self.scale + ds * dt * 20, self.target_scale)
 
+
 if __name__ == '__main__':
 
     class Color:

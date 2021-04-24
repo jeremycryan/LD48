@@ -4,7 +4,7 @@ import pygame
 import random
 
 import constants as c
-from scene import Scene
+from scene import Scene, LevelScene
 
 
 class Game:
@@ -22,7 +22,7 @@ class Game:
         self.image_dict = {}
 
         self.load_sounds()
-        self.current_scene = Scene(self)
+        self.current_scene = LevelScene(self)
         self.main()
 
     def load_sounds(self):
