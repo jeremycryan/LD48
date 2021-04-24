@@ -26,11 +26,17 @@ class Game:
         self.main()
 
     def load_sounds(self):
+        self.sample_music = pygame.mixer.Sound(c.sound_path("sample_music.ogg"))
+        self.sample_music.set_volume(0.1)
+        self.song_1 = pygame.mixer.Sound(c.sound_path("song_1.ogg"))
+        self.song_1.set_volume(0.1)
         pass
 
-    def load_image(self, path):
+    def load_image(self, path, flipped=False):
         if path not in self.image_dict:
             self.image_dict[path] = pygame.image.load(c.image_path(path))
+        if flipped:
+            return pygame.transform.flip(self.image_dict[path], True, False)
         return self.image_dict[path]
 
     def update_global(self):
