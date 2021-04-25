@@ -2,6 +2,7 @@ import sys
 
 import pygame
 import random
+import time
 
 import constants as c
 from scene import Scene, LevelScene
@@ -22,6 +23,7 @@ class Game:
         self.image_dict = {}
 
         self.load_sounds()
+        self.last_music_play = time.time()
         self.current_scene = LevelScene(self)
         self.main()
 
@@ -30,7 +32,8 @@ class Game:
         self.sample_music.set_volume(0.1)
         self.song_1 = pygame.mixer.Sound(c.sound_path("song_1.ogg"))
         self.song_1.set_volume(0.1)
-        pass
+        self.song_2 = pygame.mixer.Sound(c.sound_path("song_2.ogg"))
+        self.song_2.set_volume(0.1)
 
     def load_image(self, path, flipped=False):
         if path not in self.image_dict:

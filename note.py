@@ -56,7 +56,7 @@ class Note(GameObject):
         return x
 
     def update(self, dt, events):
-        if self.missed and self.y < -50:
+        if self.missed and self.y < -100:
             self.destroy()
         pass
 

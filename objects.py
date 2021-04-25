@@ -1,5 +1,6 @@
 from primitives import GameObject
 import pygame
+import constants as c
 
 class FadeObject(GameObject):
     def __init__(self, game, x, y):
@@ -87,6 +88,18 @@ class Child(FadeObject):
                        game.load_image("young_child_2.png", flipped=True)]
         self.make_shadows()
 
+class Teen(FadeObject):
+    def draw(self, surf, offset=(0, 0)):
+        self.draw_align_bottom(surf, offset=offset)
+
+    def __init__(self, game, x, y):
+        super().__init__(game, x, y)
+        self.frames = [game.load_image("teen.png"),
+                       game.load_image("teen.png", flipped=True)]
+        self.special_frames = {"Mistake": game.load_image("teen_mistake.png")}
+        self.make_shadows()
+
+
 class Bench(FadeObject):
     def __init__(self, game, x, y):
         super().__init__(game, x, y)
@@ -117,11 +130,41 @@ class Mom(FadeObject):
     def draw(self, surf, offset=(0, 0)):
         self.draw_align_bottom(surf, offset=offset)
 
+class MomGray(FadeObject):
+    def __init__(self, game, x, y):
+        super().__init__(game, x, y)
+        self.frames = [game.load_image("mom_gray.png"),
+                       game.load_image("mom_gray_2.png"),
+                       game.load_image("mom_gray.png", flipped=True),
+                       game.load_image("mom_gray_2.png", flipped=True)]
+        self.make_shadows()
+
+    def draw(self, surf, offset=(0, 0)):
+        self.draw_align_bottom(surf, offset=offset)
+
 class Background(FadeObject):
     def __init__(self, game, x, y):
         super().__init__(game, x, y)
         self.frames = [game.load_image("background.png")]
         self.shadowless = True
+        self.cloud_1 = (c.WINDOW_WIDTH//2, c.WINDOW_HEIGHT*0.3)
+        self.cloud_2 = (c.WINDOW_WIDTH*0.1, c.WINDOW_HEIGHT//5)
+
+        self.cloud_1_surf = game.load_image("cloud_1.png")
+        self.cloud_2_surf = game.load_image("cloud_2.png")
+
+    def update(self, dt, events):
+        self.cloud_1 = self.cloud_1[0] + dt*20, self.cloud_1[1]
+        self.cloud_2 = self.cloud_2[0] + dt*20, self.cloud_2[1]
+        if self.cloud_1[0] > c.WINDOW_WIDTH:
+            self.cloud_1 = -100, self.cloud_1[1]
+        if self.cloud_2[0] > c.WINDOW_WIDTH:
+            self.cloud_2 = -100, self.cloud_2[1]
+
+    def draw(self, surf, offset=(0, 0)):
+        super().draw(surf, offset)
+        surf.blit(self.cloud_1_surf, self.cloud_1)
+        surf.blit(self.cloud_2_surf, self.cloud_2)
 
 class Curtains(FadeObject):
     def __init__(self, game, x, y):
