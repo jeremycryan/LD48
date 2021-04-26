@@ -26,7 +26,7 @@ class FadeObject(GameObject):
 
     def set_special_frame(self, frame):
         if frame in self.special_frames:
-            self.since_special = -1/(self.fps) - (1 - ((self.age*self.fps) % 1))
+            self.since_special = -3/(self.fps) - (1 - ((self.age*self.fps) % 1))
             self.active_special = frame
 
     def get_current_frame(self):
@@ -88,6 +88,18 @@ class Child(FadeObject):
                        game.load_image("young_child_2.png", flipped=True)]
         self.make_shadows()
 
+class Daughter(FadeObject):
+    def draw(self, surf, offset=(0, 0)):
+        self.draw_align_bottom(surf, offset=offset)
+
+    def __init__(self, game, x, y):
+        super().__init__(game, x, y)
+        self.frames = [game.load_image("daughter.png"),
+                       game.load_image("daughter_2.png"),
+                       game.load_image("daughter.png", flipped=True),
+                       game.load_image("daughter_2.png", flipped=True)]
+        self.make_shadows()
+
 class Teen(FadeObject):
     def draw(self, surf, offset=(0, 0)):
         self.draw_align_bottom(surf, offset=offset)
@@ -97,6 +109,21 @@ class Teen(FadeObject):
         self.frames = [game.load_image("teen.png"),
                        game.load_image("teen.png", flipped=True)]
         self.special_frames = {"Mistake": game.load_image("teen_mistake.png")}
+        self.make_shadows()
+
+
+class Adult(FadeObject):
+    def draw(self, surf, offset=(0, 0)):
+        self.draw_align_bottom(surf, offset=offset)
+
+    def __init__(self, game, x, y):
+        super().__init__(game, x, y)
+        self.frames = [game.load_image("adult.png"),
+                       game.load_image("adult_2.png"),
+                       game.load_image("adult.png", flipped=True),
+                       game.load_image("adult_2.png", flipped=True)
+                       ]
+        self.special_frames = {"Mistake": game.load_image("adult_mistake.png")}
         self.make_shadows()
 
 
@@ -112,10 +139,28 @@ class Piano(FadeObject):
         self.frames = [game.load_image("piano.png")]
         self.make_shadows()
 
+class PianoFinale(FadeObject):
+    def __init__(self, game, x, y):
+        super().__init__(game, x, y)
+        self.frames = [game.load_image("piano_finale.png")]
+        self.make_shadows()
+
 class Walls(FadeObject):
     def __init__(self, game, x, y):
         super().__init__(game, x, y)
         self.frames = [game.load_image("walls.png")]
+        self.shadowless = True
+
+class WallsEvening(FadeObject):
+    def __init__(self, game, x, y):
+        super().__init__(game, x, y)
+        self.frames = [game.load_image("walls_evening.png")]
+        self.shadowless = True
+
+class WallsNight(FadeObject):
+    def __init__(self, game, x, y):
+        super().__init__(game, x, y)
+        self.frames = [game.load_image("walls_night.png")]
         self.shadowless = True
 
 class Mom(FadeObject):
@@ -129,6 +174,13 @@ class Mom(FadeObject):
 
     def draw(self, surf, offset=(0, 0)):
         self.draw_align_bottom(surf, offset=offset)
+
+class Granny(FadeObject):
+    def __init__(self, game, x, y):
+        super().__init__(game, x, y)
+        self.frames = [game.load_image("granny.png"),
+                       game.load_image("granny_2.png")]
+        self.make_shadows()
 
 class MomGray(FadeObject):
     def __init__(self, game, x, y):
@@ -165,6 +217,18 @@ class Background(FadeObject):
         super().draw(surf, offset)
         surf.blit(self.cloud_1_surf, self.cloud_1)
         surf.blit(self.cloud_2_surf, self.cloud_2)
+
+class BackgroundEvening(FadeObject):
+    def __init__(self, game, x, y):
+        super().__init__(game, x, y)
+        self.frames = [game.load_image("background_evening.png")]
+        self.shadowless = True
+
+class BackgroundNight(FadeObject):
+    def __init__(self, game, x, y):
+        super().__init__(game, x, y)
+        self.frames = [game.load_image("background_night.png")]
+        self.shadowless = True
 
 class Curtains(FadeObject):
     def __init__(self, game, x, y):
